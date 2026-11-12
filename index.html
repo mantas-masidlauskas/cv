@@ -1,0 +1,637 @@
+<title>mantasm CV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+/* Layout: a sticky identity rail (name, role, contact) beside one reading column.
+   The career bar is the only drawn element, and it is to scale. */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#0F1B2D; --muted:#55647D; --line:#D5DCE8;
+  --accent:#512BD4; --on-accent:#FFFFFF;
+  --geo-1:#D8D2F8; --geo-2:#B5AAF0; --geo-3:#8672E4; --geo-4:#512BD4;
+
+  --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono","Cascadia Code",Consolas,ui-monospace,monospace;
+  --col-meta:9.5rem;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1322; --surface:#141D31; --ink:#E7ECF5; --muted:#9AA7BD; --line:#26334D;
+  --accent:#A99EFF; --on-accent:#0C1322;
+  --geo-1:#2B2856; --geo-2:#423C86; --geo-3:#6E62D6; --geo-4:#A99EFF;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0C1322; --surface:#141D31; --ink:#E7ECF5; --muted:#9AA7BD; --line:#26334D;
+  --accent:#A99EFF; --on-accent:#0C1322;
+  --geo-1:#2B2856; --geo-2:#423C86; --geo-3:#6E62D6; --geo-4:#A99EFF;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);
+  font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:.2em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.page{padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:clamp(2.5rem,7vw,5.5rem)}
+.layout{max-width:70rem;margin-inline:auto;display:grid;
+  grid-template-columns:minmax(0,1fr);gap:3.5rem}
+.rail{display:flex;flex-direction:column;gap:1.75rem;min-width:0}
+.main{display:flex;flex-direction:column;gap:4rem;min-width:0;
+  container-type:inline-size;container-name:main}
+
+/* Identity rail */
+.id{display:flex;flex-direction:column;gap:.9rem}
+.eyebrow{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);line-height:1.6}
+.eyebrow span{white-space:nowrap}
+.name{font-family:var(--font-display);font-weight:800;line-height:.94;
+  letter-spacing:-.035em;font-size:clamp(2.5rem,11vw,3.5rem)}
+.name span{display:block}
+.name svg{display:block;max-width:100%;height:auto;fill:currentColor}
+.label{font-size:1.1875rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.label-sub{font-size:.9375rem;color:var(--muted);line-height:1.45}
+.contact{display:flex;flex-direction:column;gap:.75rem}
+.cta{display:flex;flex-wrap:wrap;gap:.6rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.8rem 1.15rem;border-radius:6px;border:1px solid transparent;
+  font:600 .9375rem/1.1 var(--font-body);text-decoration:none;cursor:pointer;
+  transition:transform .15s ease,border-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+.arr{font-family:var(--font-mono);font-weight:400}
+.note{font-size:.8125rem;color:var(--muted);line-height:1.5}
+.nav{display:none}
+.nav ul{display:flex;flex-direction:column;gap:.1rem}
+.nav a{display:flex;align-items:center;gap:.75rem;padding:.3rem 0;
+  font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none}
+.nav a::before{content:"";width:1.5rem;height:1px;background:currentColor;
+  transition:width .2s ease}
+.nav a:hover,.nav a[aria-current]{color:var(--ink)}
+.nav a:hover::before,.nav a[aria-current]::before{width:3rem}
+.tools{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+.tool{background:none;border:0;padding:.25rem 0;cursor:pointer;color:var(--muted);
+  font:400 .6875rem/1.4 var(--font-mono);letter-spacing:.06em;
+  text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.3em}
+.tool:hover{color:var(--ink)}
+
+@media (min-width:62rem){
+  .layout{grid-template-columns:minmax(0,20rem) minmax(0,1fr);
+    gap:clamp(3rem,6vw,5.5rem);padding-inline:clamp(0rem,2vw,1.5rem)}
+  .name{font-size:2.625rem}
+  .nav{display:block}
+}
+@media (min-width:62rem) and (min-height:44rem){
+  .rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.5rem);align-self:start}
+}
+
+/* Sections */
+.section{display:flex;flex-direction:column;gap:1.5rem;scroll-margin-top:2rem}
+.section>h2{display:flex;align-items:center;gap:1rem;font-family:var(--font-display);
+  font-size:1.5rem;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+.section>h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.lede{font-size:1.0625rem;line-height:1.7;max-width:38rem}
+
+/* Headline figures */
+.impact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 1.5rem}
+@container main (min-width:38rem){.impact{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.impact li{display:flex;flex-direction:column;gap:.3rem;padding-top:.8rem;
+  border-top:2px solid var(--ink);min-width:0}
+.fig{font-family:var(--font-display);font-weight:700;line-height:1;letter-spacing:-.03em;
+  font-size:clamp(2rem,1.4rem + 2.4vw,2.75rem);color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.lab{font-size:.9375rem;font-weight:600;line-height:1.3}
+.det{font-size:.8125rem;color:var(--muted);line-height:1.45}
+
+/* Career bar: one block per role, width = months, colour = where it was based */
+.career{display:flex;flex-direction:column;gap:.5rem}
+.bar{position:relative;height:1.75rem}
+.seg{position:absolute;top:0;bottom:0;min-width:3px;border-radius:3px;
+  background:var(--geo-4);transition:transform .15s ease}
+.seg.g1{background:var(--geo-1)}.seg.g2{background:var(--geo-2)}
+.seg.g3{background:var(--geo-3)}.seg.g4{background:var(--geo-4)}
+.seg:hover,.seg:focus-visible{transform:scaleY(1.3)}
+.axis{position:relative;height:1.1rem;font-family:var(--font-mono);font-size:.6875rem;
+  color:var(--muted);font-variant-numeric:tabular-nums}
+.axis span{position:absolute;top:0;line-height:1.1rem;padding-left:.35rem;
+  border-left:1px solid var(--line)}
+.career-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem 1.5rem;
+  padding-top:.35rem}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1.1rem;font-size:.8125rem;color:var(--muted)}
+.swatch{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;
+  margin-right:.45rem;vertical-align:-1px;background:var(--geo-4)}
+.swatch.g1{background:var(--geo-1)}.swatch.g2{background:var(--geo-2)}
+.swatch.g3{background:var(--geo-3)}
+.bar-caption{font-family:var(--font-mono);font-size:.75rem;color:var(--muted);line-height:1.5}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .bar{animation:draw 1.2s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes draw{from{clip-path:inset(-40% 100% -40% 0)}to{clip-path:inset(-40% 0 -40% 0)}}
+}
+
+/* Roles */
+.roles{display:flex;flex-direction:column;gap:.35rem}
+.role{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1.5rem;
+  padding:1.1rem 1rem;margin-inline:-1rem;border-radius:8px;scroll-margin-top:1.5rem;
+  border:1px solid transparent;transition:background-color .2s ease,border-color .2s ease}
+.role:hover,.role:target{background:var(--surface);border-color:var(--line)}
+.role-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:.1rem .9rem;min-width:0}
+.role-dates{font-family:var(--font-mono);font-size:.75rem;line-height:1.7;white-space:nowrap}
+.role-sub{font-size:.8125rem;color:var(--muted);line-height:1.5}
+.role-body{display:flex;flex-direction:column;gap:.7rem;min-width:0}
+.role h3{font-size:1.0625rem;font-weight:600;line-height:1.35;text-wrap:balance}
+.role h3 a{text-decoration:none}
+.role h3 a:hover{text-decoration:underline}
+.sep{color:var(--muted);font-weight:400}
+.points{list-style:disc;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem;
+  font-size:.9375rem;line-height:1.55}
+.points li::marker{color:var(--accent)}
+.tech{display:flex;flex-wrap:wrap;gap:.35rem}
+.tech li{font-family:var(--font-mono);font-size:.6875rem;line-height:1.5;color:var(--muted);
+  padding:.1rem .45rem;border:1px solid var(--line);border-radius:4px}
+.role.condensed .points{font-size:.875rem}
+@container main (min-width:36rem){
+  .role,.group{grid-template-columns:var(--col-meta) minmax(0,1fr)}
+  .role-meta{flex-direction:column;gap:.15rem;padding-top:.15rem}
+}
+
+/* Skills, certifications, education share the role grid's label column */
+.groups{display:flex;flex-direction:column;gap:1.25rem}
+.group{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1.5rem}
+.group h3{font-size:.875rem;font-weight:600;line-height:1.4;padding-top:.2rem}
+.group .meta{font-family:var(--font-mono);font-size:.75rem;color:var(--muted);
+  line-height:1.7;padding-top:.15rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chips li{font-size:.8125rem;line-height:1.45;padding:.2rem .6rem;border-radius:4px;
+  background:var(--surface);border:1px solid var(--line)}
+.plain{display:flex;flex-direction:column;gap:.35rem;font-size:.9375rem;line-height:1.5}
+.plain .muted{color:var(--muted)}
+.foot{font-size:.8125rem;color:var(--muted);line-height:1.6;padding-top:1.5rem;
+  border-top:1px solid var(--line)}
+
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#0F1B2D; --muted:#55647D; --line:#D5DCE8;
+  --accent:#512BD4; --on-accent:#FFFFFF;
+  --geo-1:#D8D2F8; --geo-2:#B5AAF0; --geo-3:#8672E4; --geo-4:#512BD4;
+
+    --bg:#FFFFFF;color-scheme:light}
+  .page{padding-block:0}
+  .layout{display:block}
+  .rail{position:static;margin-bottom:2rem}
+  .main{gap:2rem}
+  .nav,.tools,.career,.cta{display:none}
+  .role{break-inside:avoid;padding-block:.6rem}
+  .bar{animation:none}
+}
+</style>
+<div class="page"><div class="layout">
+<header class="rail">
+<div class="id">
+<p class="eyebrow"><span>Vilnius, Lithuania</span> · <span>Open to remote worldwide</span></p>
+<h1 class="name"><svg role="img" aria-label="mantasm" viewBox="57 -662 6142 1619" style="width:6.142em"><path d="M59 0V-660H301L460 -187H464L620 -660H850V0H698L705 -496H696L520 0H385L211 -496H203L209 0ZM1056 14Q1014 14 979 -2Q944 -18 924 -51Q904 -84 904 -134Q904 -180 922 -210Q940 -240 973 -258Q1006 -276 1050 -286Q1094 -297 1146 -306Q1183 -312 1205 -317Q1226 -322 1236 -332Q1246 -341 1246 -358Q1246 -385 1227 -402Q1208 -418 1169 -418Q1144 -418 1121 -409Q1098 -400 1083 -380Q1068 -361 1063 -330L920 -361Q928 -411 951 -445Q974 -480 1008 -501Q1042 -523 1085 -532Q1127 -542 1174 -542Q1254 -542 1304 -515Q1355 -488 1380 -434Q1404 -380 1404 -298V-212Q1404 -177 1405 -142Q1406 -106 1408 -71Q1409 -36 1412 0H1271Q1268 -28 1265 -61Q1263 -95 1262 -132H1247Q1236 -91 1210 -58Q1184 -25 1145 -5Q1106 14 1056 14ZM1127 -101Q1145 -101 1164 -108Q1183 -114 1200 -127Q1217 -140 1230 -160Q1243 -180 1248 -207L1247 -267L1270 -265Q1255 -252 1233 -245Q1212 -238 1189 -233Q1165 -229 1143 -225Q1120 -220 1101 -213Q1083 -206 1072 -194Q1061 -182 1061 -160Q1061 -133 1080 -117Q1099 -101 1127 -101ZM1470 0V-311V-528H1602L1603 -352H1619Q1630 -416 1652 -458Q1675 -500 1712 -521Q1749 -542 1802 -542Q1892 -542 1939 -480Q1985 -418 1985 -285V0H1823V-266Q1823 -339 1802 -373Q1781 -406 1739 -406Q1704 -406 1680 -384Q1656 -362 1644 -321Q1631 -280 1631 -222V0ZM2258 13Q2164 13 2120 -36Q2076 -85 2076 -191V-402H2006L2008 -519H2045Q2087 -522 2107 -540Q2127 -557 2131 -597L2140 -646H2232V-528H2358V-397H2232V-201Q2232 -165 2249 -149Q2266 -133 2299 -133Q2316 -133 2332 -137Q2348 -141 2360 -148V-2Q2328 8 2303 10Q2277 13 2258 13ZM2537 14Q2494 14 2460 -2Q2425 -18 2405 -51Q2384 -84 2384 -134Q2384 -180 2402 -210Q2420 -240 2453 -258Q2486 -276 2530 -286Q2574 -297 2626 -306Q2663 -312 2685 -317Q2707 -322 2717 -332Q2727 -341 2727 -358Q2727 -385 2707 -402Q2688 -418 2650 -418Q2624 -418 2601 -409Q2579 -400 2564 -380Q2548 -361 2543 -330L2401 -361Q2409 -411 2432 -445Q2454 -480 2488 -501Q2523 -523 2565 -532Q2608 -542 2655 -542Q2734 -542 2785 -515Q2836 -488 2860 -434Q2885 -380 2885 -298V-212Q2885 -177 2886 -142Q2887 -106 2888 -71Q2890 -36 2892 0H2751Q2748 -28 2746 -61Q2743 -95 2742 -132H2727Q2717 -91 2690 -58Q2664 -25 2625 -5Q2586 14 2537 14ZM2608 -101Q2626 -101 2644 -108Q2663 -114 2680 -127Q2698 -140 2710 -160Q2723 -180 2729 -207L2727 -267L2750 -265Q2735 -252 2714 -245Q2693 -238 2669 -233Q2646 -229 2623 -225Q2600 -220 2582 -213Q2563 -206 2553 -194Q2542 -182 2542 -160Q2542 -133 2560 -117Q2579 -101 2608 -101ZM3171 14Q3118 14 3074 4Q3030 -6 2998 -26Q2965 -45 2946 -75Q2926 -105 2922 -144L3050 -184Q3055 -161 3071 -142Q3087 -123 3114 -112Q3141 -102 3180 -102Q3217 -102 3240 -113Q3262 -124 3262 -147Q3262 -162 3251 -171Q3240 -180 3216 -188Q3192 -195 3154 -203Q3112 -213 3072 -224Q3033 -236 3000 -254Q2968 -272 2949 -302Q2930 -331 2930 -375Q2930 -426 2958 -463Q2985 -500 3037 -521Q3088 -542 3160 -542Q3224 -542 3275 -524Q3326 -507 3359 -471Q3391 -436 3398 -382L3265 -348Q3263 -372 3249 -390Q3235 -407 3212 -416Q3190 -426 3158 -426Q3121 -426 3101 -413Q3080 -401 3080 -382Q3080 -366 3094 -356Q3107 -345 3133 -338Q3159 -331 3197 -322Q3235 -315 3273 -304Q3311 -293 3342 -275Q3374 -258 3393 -229Q3412 -200 3412 -154Q3412 -103 3384 -65Q3356 -27 3303 -6Q3249 14 3171 14ZM59 940V280H301L460 753H464L620 280H850V940H698L705 444H696L520 940H385L211 444H203L209 940ZM1056 954Q1014 954 979 938Q944 922 924 889Q904 856 904 806Q904 760 922 730Q940 700 973 682Q1006 664 1050 654Q1094 643 1146 634Q1183 628 1205 623Q1226 618 1236 608Q1246 599 1246 582Q1246 555 1227 538Q1208 522 1169 522Q1144 522 1121 531Q1098 540 1083 560Q1068 579 1063 610L920 579Q928 529 951 495Q974 460 1008 439Q1042 417 1085 408Q1127 398 1174 398Q1254 398 1304 425Q1355 452 1380 506Q1404 560 1404 642V728Q1404 763 1405 798Q1406 834 1408 869Q1409 904 1412 940H1271Q1268 912 1265 879Q1263 845 1262 808H1247Q1236 849 1210 882Q1184 915 1145 935Q1106 954 1056 954ZM1127 839Q1145 839 1164 832Q1183 826 1200 813Q1217 800 1230 780Q1243 760 1248 733L1247 673L1270 675Q1255 688 1233 695Q1212 702 1189 707Q1165 711 1143 715Q1120 720 1101 727Q1083 734 1072 746Q1061 758 1061 780Q1061 807 1080 823Q1099 839 1127 839ZM1691 954Q1638 954 1594 944Q1550 934 1517 914Q1485 895 1465 865Q1446 835 1442 796L1569 756Q1574 779 1590 798Q1606 817 1633 828Q1661 838 1699 838Q1737 838 1759 827Q1782 816 1782 793Q1782 778 1771 769Q1759 760 1736 752Q1712 745 1674 737Q1632 727 1592 716Q1552 704 1520 686Q1488 668 1469 638Q1450 609 1450 565Q1450 514 1477 477Q1504 440 1556 419Q1608 398 1680 398Q1744 398 1795 416Q1846 433 1878 469Q1911 504 1917 558L1785 592Q1783 568 1769 550Q1755 533 1732 524Q1709 514 1678 514Q1640 514 1620 527Q1600 539 1600 558Q1600 574 1613 584Q1626 595 1653 602Q1679 609 1716 618Q1754 625 1792 636Q1830 647 1862 665Q1894 682 1913 711Q1932 740 1932 786Q1932 837 1904 875Q1876 913 1822 934Q1768 954 1691 954ZM1512 169 1677 247 1842 169V285L1677 362L1512 285ZM1973 940V412H2134V940ZM2054 350Q2008 350 1983 331Q1959 311 1959 275Q1959 237 1983 217Q2008 198 2054 198Q2101 198 2125 218Q2150 237 2150 275Q2150 311 2125 331Q2101 350 2054 350ZM2397 954Q2334 954 2286 921Q2237 889 2210 826Q2182 763 2182 673Q2182 589 2206 528Q2230 466 2277 433Q2323 399 2390 399Q2438 399 2473 418Q2508 436 2531 474Q2554 512 2566 570H2586Q2579 536 2574 505Q2568 474 2565 446Q2562 418 2562 395V227H2724V706V940H2588L2587 782H2570Q2560 841 2536 879Q2513 917 2478 936Q2444 954 2397 954ZM2455 824Q2481 824 2502 813Q2522 801 2535 781Q2549 761 2555 736Q2562 711 2562 684V668Q2562 645 2557 625Q2552 604 2542 587Q2532 569 2519 556Q2505 544 2488 537Q2471 530 2452 530Q2419 530 2397 549Q2374 568 2362 601Q2350 634 2350 677Q2350 720 2363 753Q2376 787 2399 806Q2423 824 2455 824ZM2795 940V227H2955V940ZM3155 954Q3113 954 3078 938Q3043 922 3023 889Q3002 856 3002 806Q3002 760 3020 730Q3038 700 3071 682Q3104 664 3148 654Q3193 643 3244 634Q3282 628 3303 623Q3325 618 3335 608Q3345 599 3345 582Q3345 555 3326 538Q3306 522 3268 522Q3242 522 3220 531Q3197 540 3182 560Q3166 579 3162 610L3019 579Q3027 529 3050 495Q3072 460 3107 439Q3141 417 3183 408Q3226 398 3273 398Q3352 398 3403 425Q3454 452 3478 506Q3503 560 3503 642V728Q3503 763 3504 798Q3505 834 3506 869Q3508 904 3511 940H3369Q3367 912 3364 879Q3362 845 3360 808H3345Q3335 849 3309 882Q3283 915 3244 935Q3205 954 3155 954ZM3226 839Q3244 839 3263 832Q3281 826 3299 813Q3316 800 3329 780Q3342 760 3347 733L3346 673L3369 675Q3354 688 3332 695Q3311 702 3287 707Q3264 711 3241 715Q3218 720 3200 727Q3182 734 3171 746Q3160 758 3160 780Q3160 807 3179 823Q3198 839 3226 839ZM3744 954Q3652 954 3607 892Q3562 830 3562 702V412H3724V687Q3724 756 3744 787Q3764 819 3804 819Q3829 819 3848 806Q3867 794 3881 769Q3895 745 3901 711Q3908 678 3908 635V412H4070V718V940H3938L3936 762H3921Q3909 830 3887 872Q3865 914 3830 934Q3795 954 3744 954ZM4362 954Q4309 954 4265 944Q4221 934 4189 914Q4156 895 4137 865Q4117 835 4113 796L4241 756Q4246 779 4262 798Q4278 817 4305 828Q4332 838 4371 838Q4408 838 4431 827Q4453 816 4453 793Q4453 778 4442 769Q4431 760 4407 752Q4383 745 4345 737Q4303 727 4263 716Q4224 704 4191 686Q4159 668 4140 638Q4121 609 4121 565Q4121 514 4149 477Q4176 440 4228 419Q4279 398 4351 398Q4415 398 4466 416Q4518 433 4550 469Q4582 504 4588 558L4456 592Q4454 568 4440 550Q4426 533 4403 524Q4380 514 4349 514Q4312 514 4292 527Q4271 539 4271 558Q4271 574 4285 584Q4298 595 4324 602Q4350 609 4388 618Q4426 625 4464 636Q4502 647 4533 665Q4565 682 4584 711Q4603 740 4603 786Q4603 837 4575 875Q4547 913 4494 934Q4440 954 4362 954ZM4645 940V226H4803V615Q4833 595 4858 571Q4884 548 4904 521Q4923 495 4938 468Q4953 440 4964 412H5149Q5137 451 5115 490Q5092 528 5061 560Q5029 593 4985 617Q4942 641 4888 652V666Q4957 654 5001 665Q5045 677 5071 704Q5097 730 5111 767Q5125 804 5134 843L5156 940H4981L4970 877Q4963 834 4951 801Q4940 768 4917 750Q4894 731 4848 731H4803V940ZM5322 954Q5279 954 5244 938Q5210 922 5189 889Q5169 856 5169 806Q5169 760 5187 730Q5205 700 5238 682Q5271 664 5315 654Q5359 643 5411 634Q5448 628 5470 623Q5492 618 5502 608Q5511 599 5511 582Q5511 555 5492 538Q5473 522 5435 522Q5409 522 5386 531Q5364 540 5348 560Q5333 579 5328 610L5185 579Q5194 529 5216 495Q5239 460 5273 439Q5307 417 5350 408Q5392 398 5439 398Q5519 398 5570 425Q5620 452 5645 506Q5669 560 5669 642V728Q5669 763 5670 798Q5671 834 5673 869Q5674 904 5677 940H5536Q5533 912 5531 879Q5528 845 5527 808H5512Q5501 849 5475 882Q5449 915 5410 935Q5371 954 5322 954ZM5393 839Q5410 839 5429 832Q5448 826 5465 813Q5482 800 5495 780Q5508 760 5513 733L5512 673L5535 675Q5520 688 5499 695Q5477 702 5454 707Q5431 711 5408 715Q5385 720 5367 727Q5348 734 5337 746Q5326 758 5326 780Q5326 807 5345 823Q5364 839 5393 839ZM5956 954Q5903 954 5859 944Q5815 934 5782 914Q5750 895 5730 865Q5711 835 5707 796L5834 756Q5840 779 5856 798Q5872 817 5899 828Q5926 838 5965 838Q6002 838 6025 827Q6047 816 6047 793Q6047 778 6036 769Q6025 760 6001 752Q5977 745 5939 737Q5897 727 5857 716Q5817 704 5785 686Q5753 668 5734 638Q5715 609 5715 565Q5715 514 5742 477Q5770 440 5821 419Q5873 398 5945 398Q6009 398 6060 416Q6111 433 6144 469Q6176 504 6182 558L6050 592Q6048 568 6034 550Q6020 533 5997 524Q5974 514 5943 514Q5906 514 5885 527Q5865 539 5865 558Q5865 574 5878 584Q5892 595 5918 602Q5944 609 5982 618Q6020 625 6057 636Q6095 647 6127 665Q6159 682 6178 711Q6197 740 6197 786Q6197 837 6169 875Q6141 913 6087 934Q6034 954 5956 954Z"/></svg></h1>
+<p class="label">Hands-on .NET Solution Architect</p>
+<p class="label-sub">Full Stack, Azure &amp; AWS, DevOps, AI</p>
+</div>
+<div class="contact"><div class="cta">
+<a class="btn btn-primary" href="https://www.linkedin.com/in/mantasm" target="_blank" rel="noopener noreferrer">Message me on LinkedIn <span class="arr" aria-hidden="true">↗</span></a>
+</div>
+<p class="note">Phone and email on request.</p>
+</div>
+<nav class="nav" aria-label="Sections"><ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#experience">Experience</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#certifications">Certifications</a></li>
+<li><a href="#education">Education</a></li>
+</ul></nav>
+</header>
+<main class="main">
+<section class="section" id="summary">
+<h2>Summary</h2>
+<p class="lede">Hands-on .NET solution architect and full-stack engineer with 18+ years designing and shipping production systems in C# on Azure and AWS — spanning backend, front end, DevOps and AI engineering — for UK government, financial services and enterprise clients. Trusted with architectural decisions end to end, from microservices, data and infrastructure design (Terraform) through to production; most recently an AI-powered OCR platform processing millions of documents. Repeatedly re-architected systems for speed and cost — SQL and NoSQL optimisation, faster processing pipelines, leaner cloud infrastructure — e.g. cutting AWS costs by 50%, compute costs by 40% and making Elasticsearch queries 5× faster. Adapts quickly to changing requirements and proactively proposes modern, best-practice solutions.</p>
+<ul class="impact">
+<li><span class="fig">18+</span><span class="lab">years shipping production systems</span><span class="det">C# / .NET on Azure, AWS, on-premises</span></li>
+<li><span class="fig">−50%</span><span class="lab">AWS costs</span><span class="det">Windows to Linux EC2 migration at Kaizen MAR360</span></li>
+<li><span class="fig">−40%</span><span class="lab">compute costs</span><span class="det">Autoscaling AKS on spot-priced VMs at Restore Digital</span></li>
+<li><span class="fig">5×</span><span class="lab">faster Elasticsearch queries</span><span class="det">Parallel, multithreaded processing at Kaizen MAR360</span></li>
+</ul>
+</section>
+<section class="section" id="experience">
+<h2>Experience</h2>
+<div class="career" role="group" aria-label="Career timeline, drawn to scale">
+<div class="bar">
+<a class="seg g2" href="#role-penki-kontinentai-jsc" style="left:calc(0.000% + 1px);width:calc(14.159% - 2px)" data-label="Engineer · Penki Kontinentai JSC · Jan 2008 – Sep 2010" title="Engineer · Penki Kontinentai JSC · Jan 2008 – Sep 2010"><span class="vh">Engineer · Penki Kontinentai JSC · Jan 2008 – Sep 2010</span></a>
+<a class="seg g2" href="#role-ashburn-international-jsc" style="left:calc(14.159% + 1px);width:calc(15.929% - 2px)" data-label="Full Stack Engineer · Ashburn International JSC · Sep 2010 – Sep 2013" title="Full Stack Engineer · Ashburn International JSC · Sep 2010 – Sep 2013"><span class="vh">Full Stack Engineer · Ashburn International JSC · Sep 2010 – Sep 2013</span></a>
+<a class="seg g2" href="#role-blue-bridge-code-jsc" style="left:calc(30.088% + 1px);width:calc(15.487% - 2px)" data-label="Senior Full Stack Engineer · Blue Bridge Code JSC · Sep 2013 – Aug 2016" title="Senior Full Stack Engineer · Blue Bridge Code JSC · Sep 2013 – Aug 2016"><span class="vh">Senior Full Stack Engineer · Blue Bridge Code JSC · Sep 2013 – Aug 2016</span></a>
+<a class="seg g3" href="#role-orbus-software" style="left:calc(45.575% + 1px);width:calc(5.310% - 2px)" data-label="Senior Full Stack Engineer · Orbus Software · Aug 2016 – Aug 2017" title="Senior Full Stack Engineer · Orbus Software · Aug 2016 – Aug 2017"><span class="vh">Senior Full Stack Engineer · Orbus Software · Aug 2016 – Aug 2017</span></a>
+<a class="seg g3" href="#role-novafori-formerly-perfect-channel-ltd" style="left:calc(50.885% + 1px);width:calc(6.195% - 2px)" data-label="Senior Full Stack Engineer · Novafori (formerly Perfect Channel Ltd) · Aug 2017 – Oct 2018" title="Senior Full Stack Engineer · Novafori (formerly Perfect Channel Ltd) · Aug 2017 – Oct 2018"><span class="vh">Senior Full Stack Engineer · Novafori (formerly Perfect Channel Ltd) · Aug 2017 – Oct 2018</span></a>
+<a class="seg g3" href="#role-kaizen-mar360-formerly-red-deer-ltd" style="left:calc(57.080% + 1px);width:calc(8.407% - 2px)" data-label="Senior Full Stack Engineer (Contract) · Kaizen MAR360 (formerly Red Deer Ltd) · Oct 2018 – Apr 2020" title="Senior Full Stack Engineer (Contract) · Kaizen MAR360 (formerly Red Deer Ltd) · Oct 2018 – Apr 2020"><span class="vh">Senior Full Stack Engineer (Contract) · Kaizen MAR360 (formerly Red Deer Ltd) · Oct 2018 – Apr 2020</span></a>
+<a class="seg g4" href="#role-constructionline" style="left:calc(65.929% + 1px);width:calc(4.425% - 2px)" data-label="Backend Engineer (Contract) · Constructionline · Jun 2020 – Mar 2021" title="Backend Engineer (Contract) · Constructionline · Jun 2020 – Mar 2021"><span class="vh">Backend Engineer (Contract) · Constructionline · Jun 2020 – Mar 2021</span></a>
+<a class="seg g4" href="#role-sms-plc" style="left:calc(70.796% + 1px);width:calc(6.195% - 2px)" data-label="Backend Engineer (Contract) · SMS plc · May 2021 – Jun 2022" title="Backend Engineer (Contract) · SMS plc · May 2021 – Jun 2022"><span class="vh">Backend Engineer (Contract) · SMS plc · May 2021 – Jun 2022</span></a>
+<a class="seg g4" href="#role-edge-by-ascential-ascential-plc" style="left:calc(78.761% + 1px);width:calc(2.655% - 2px)" data-label="Senior Backend Engineer (Contract) · Edge by Ascential (Ascential plc) · Nov 2022 – May 2023" title="Senior Backend Engineer (Contract) · Edge by Ascential (Ascential plc) · Nov 2022 – May 2023"><span class="vh">Senior Backend Engineer (Contract) · Edge by Ascential (Ascential plc) · Nov 2022 – May 2023</span></a>
+<a class="seg g4" href="#role-trading-labs" style="left:calc(81.416% + 1px);width:calc(1.770% - 2px)" data-label="Senior Backend Engineer (Contract) · Trading Labs · May 2023 – Aug 2023" title="Senior Backend Engineer (Contract) · Trading Labs · May 2023 – Aug 2023"><span class="vh">Senior Backend Engineer (Contract) · Trading Labs · May 2023 – Aug 2023</span></a>
+<a class="seg g4" href="#role-restore-digital" style="left:calc(83.628% + 1px);width:calc(16.372% - 2px)" data-label="Senior Engineer (Contract) · Restore Digital · Oct 2023 – Oct 2026" title="Senior Engineer (Contract) · Restore Digital · Oct 2023 – Oct 2026"><span class="vh">Senior Engineer (Contract) · Restore Digital · Oct 2023 – Oct 2026</span></a>
+</div>
+<div class="axis" aria-hidden="true">
+<span style="left:0.000%">2008</span>
+<span style="left:15.929%">2011</span>
+<span style="left:31.858%">2014</span>
+<span style="left:47.788%">2017</span>
+<span style="left:63.717%">2020</span>
+<span style="left:79.646%">2023</span>
+</div>
+<div class="career-foot">
+<ul class="legend">
+<li><span class="swatch g2"></span>Vilnius, Lithuania</li>
+<li><span class="swatch g3"></span>London, UK</li>
+<li><span class="swatch g4"></span>Remote, UK</li>
+</ul>
+<p class="bar-caption" id="bar-caption">Jan 2008 – Oct 2026 · 11 roles</p>
+</div></div>
+<div class="roles">
+<article class="role" id="role-restore-digital">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2023-10">Oct 2023</time> – <time datetime="2026-10">Oct 2026</time></p>
+<p class="role-sub">3 yrs 1 mo · Remote, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.restore.co.uk/" target="_blank" rel="noopener noreferrer">Restore Digital</a></h3>
+<ul class="points">
+<li>Took a new UK government client (SC-cleared engagement) end to end, from first setup to production support, standing up a high-availability .NET microservices platform on Azure serving 50+ users near 24/7.</li>
+<li>Provisioned the full cloud infrastructure as code with Terraform, simplifying infrastructure setup into repeatable, auditable DevOps deployments.</li>
+<li>Designed autoscaling AKS (Azure Kubernetes Service) workloads on spot-priced VMs that scale with demand, cutting compute costs by 40%.</li>
+<li>Built document-processing pipelines processing millions of documents — AI-powered OCR (AWS Bedrock, Azure AI), barcode recognition, SFTP transfer and API-based exchange — digitising physical records into searchable electronic formats.</li>
+<li>Hardened the platform to Cyber Essentials Plus, remediating findings, enforcing security baselines and securing sign-in with OpenID and Microsoft Entra ID.</li>
+<li>Connected Azure and AWS over a VPN for secure cross-cloud data flow, and authored the runbooks and technical documentation for ongoing maintenance and client handover.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET 10</li>
+<li>.NET 8</li>
+<li>.NET 6</li>
+<li>Microservices</li>
+<li>Azure (AKS, Front Door, Entra ID, Azure AI)</li>
+<li>AWS Bedrock</li>
+<li>Terraform</li>
+<li>Docker</li>
+<li>Git</li>
+<li>DevOps</li>
+</ul>
+</div></article>
+<article class="role" id="role-trading-labs">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2023-05">May 2023</time> – <time datetime="2023-08">Aug 2023</time></p>
+<p class="role-sub">4 mos · Remote, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Backend Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.linkedin.com/company/trading-labs-limited" target="_blank" rel="noopener noreferrer">Trading Labs</a></h3>
+<ul class="points">
+<li>Extended the Core Raid 2.0 product — a multi-PM fund allocating across a range of equity long/short strategies.</li>
+<li>Introduced a notification microservice alerting PMs to limit breaches and critical updates in real time.</li>
+<li>Delivered the Trading GamePlan tool, helping PMs plan, organise and strategise their trading activity.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET 7</li>
+<li>Microservices</li>
+<li>RabbitMQ</li>
+<li>MassTransit</li>
+<li>SQL Server</li>
+<li>TDD</li>
+<li>Git</li>
+</ul>
+</div></article>
+<article class="role" id="role-edge-by-ascential-ascential-plc">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2022-11">Nov 2022</time> – <time datetime="2023-05">May 2023</time></p>
+<p class="role-sub">7 mos · Remote, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Backend Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.ascentialedge.com" target="_blank" rel="noopener noreferrer">Edge by Ascential (Ascential plc)</a></h3>
+<ul class="points">
+<li>Migrated the Price &amp; Promo analytics system, serving global e-commerce brands, to an AWS microservices and serverless architecture.</li>
+<li>Modernised the system with current architecture patterns to support scalability.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET 6</li>
+<li>.NET 5</li>
+<li>Microservices</li>
+<li>AWS (ECS, Lambda, DynamoDB, ElastiCache Redis)</li>
+<li>Docker</li>
+<li>BDD</li>
+<li>TDD</li>
+</ul>
+</div></article>
+<article class="role" id="role-sms-plc">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2021-05">May 2021</time> – <time datetime="2022-06">Jun 2022</time></p>
+<p class="role-sub">1 yr 2 mos · Remote, UK</p>
+</div>
+<div class="role-body">
+<h3>Backend Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.sms-plc.com/" target="_blank" rel="noopener noreferrer">SMS plc</a></h3>
+<ul class="points">
+<li>Analysed existing integration applications and touchpoints to identify optimisation opportunities.</li>
+<li>Unified multiple systems into an enterprise microservices platform for a UK energy infrastructure business, streamlining processes and reducing complexity.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET 5</li>
+<li>Microservices</li>
+<li>AWS (ECS, S3, CloudFormation)</li>
+<li>Camunda</li>
+<li>Oracle</li>
+<li>Docker</li>
+<li>Octopus Deploy</li>
+<li>BDD</li>
+<li>TDD</li>
+</ul>
+</div></article>
+<article class="role" id="role-constructionline">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2020-06">Jun 2020</time> – <time datetime="2021-03">Mar 2021</time></p>
+<p class="role-sub">10 mos · Remote, UK</p>
+</div>
+<div class="role-body">
+<h3>Backend Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.constructionline.co.uk" target="_blank" rel="noopener noreferrer">Constructionline</a></h3>
+<ul class="points">
+<li>Shipped microservices improvements across the Supplier and Verifier domains of the UK&#x27;s leading construction procurement platform, working across teams.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Core 3.1</li>
+<li>Microservices</li>
+<li>Azure Functions</li>
+<li>Cosmos DB</li>
+<li>Application Insights</li>
+<li>SpecFlow</li>
+<li>TDD</li>
+</ul>
+</div></article>
+<article class="role" id="role-kaizen-mar360-formerly-red-deer-ltd">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2018-10">Oct 2018</time> – <time datetime="2020-04">Apr 2020</time></p>
+<p class="role-sub">1 yr 7 mos · London, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Full Stack Engineer (Contract)&nbsp;<span class="sep">·</span> <a href="https://www.kaizenreporting.com/" target="_blank" rel="noopener noreferrer">Kaizen MAR360 (formerly Red Deer Ltd)</a></h3>
+<ul class="points">
+<li>Upgraded the E-comms and Trade Surveillance applications and added a tool ingesting terabyte-scale communications data into Elasticsearch.</li>
+<li>Migrated infrastructure from Windows to Linux EC2, cutting AWS costs by 50%.</li>
+<li>Optimised Elasticsearch queries with parallel, multithreaded processing, improving performance 5×.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Core 2.2</li>
+<li>AWS (EC2, DynamoDB, Aurora, S3)</li>
+<li>Elasticsearch (ELK)</li>
+<li>GraphQL</li>
+<li>AngularJS</li>
+<li>TypeScript</li>
+<li>Terraform</li>
+</ul>
+</div></article>
+<article class="role" id="role-novafori-formerly-perfect-channel-ltd">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2017-08">Aug 2017</time> – <time datetime="2018-10">Oct 2018</time></p>
+<p class="role-sub">1 yr 3 mos · London, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Full Stack Engineer&nbsp;<span class="sep">·</span> <a href="https://www.novafori.com" target="_blank" rel="noopener noreferrer">Novafori (formerly Perfect Channel Ltd)</a></h3>
+<ul class="points">
+<li>Re-platformed the auction system onto AWS serverless microservices and rewrote the UI as a React single-page application, with CI/CD and automated testing.</li>
+<li>Applied time-boxing, continuous integration, code reviews and technical-debt reduction in a scaled Agile team, increasing realised velocity by over 100%.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Core 1.1</li>
+<li>React</li>
+<li>Redux</li>
+<li>TypeScript</li>
+<li>AWS (Lambda, API Gateway, DynamoDB)</li>
+<li>RabbitMQ</li>
+<li>Terraform</li>
+</ul>
+</div></article>
+<article class="role" id="role-orbus-software">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2016-08">Aug 2016</time> – <time datetime="2017-08">Aug 2017</time></p>
+<p class="role-sub">1 yr 1 mo · London, UK</p>
+</div>
+<div class="role-body">
+<h3>Senior Full Stack Engineer&nbsp;<span class="sep">·</span> <a href="https://www.orbussoftware.com" target="_blank" rel="noopener noreferrer">Orbus Software</a></h3>
+<ul class="points">
+<li>Reinforced the cloud enterprise-architecture platform with caching, API security and retry policies for transient faults, and managed its Azure resources for scalability and reliability.</li>
+<li>Converted the codebase from JavaScript to TypeScript, raising unit-test coverage by 20% and improving stability.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Framework</li>
+<li>ASP.NET MVC/Web API</li>
+<li>Entity Framework</li>
+<li>SQL Server</li>
+<li>AngularJS</li>
+<li>TypeScript</li>
+<li>Azure</li>
+<li>Redis</li>
+</ul>
+</div></article>
+<article class="role condensed" id="role-blue-bridge-code-jsc">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2013-09">Sep 2013</time> – <time datetime="2016-08">Aug 2016</time></p>
+<p class="role-sub">3 yrs · Vilnius, Lithuania</p>
+</div>
+<div class="role-body">
+<h3>Senior Full Stack Engineer&nbsp;<span class="sep">·</span> <a href="https://www.bluebridge.lt" target="_blank" rel="noopener noreferrer">Blue Bridge Code JSC</a></h3>
+<ul class="points">
+<li>Architected and maintained national government and statistical applications; scoped solutions and estimates in pre-sales.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Framework</li>
+<li>.NET Core 1.0</li>
+<li>ASP.NET MVC</li>
+<li>Entity Framework</li>
+<li>SQL Server (SSRS, SSIS, SSAS)</li>
+<li>jQuery</li>
+<li>TFS</li>
+<li>NUnit</li>
+</ul>
+</div></article>
+<article class="role condensed" id="role-ashburn-international-jsc">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2010-09">Sep 2010</time> – <time datetime="2013-09">Sep 2013</time></p>
+<p class="role-sub">3 yrs 1 mo · Vilnius, Lithuania</p>
+</div>
+<div class="role-body">
+<h3>Full Stack Engineer&nbsp;<span class="sep">·</span> <a href="http://www.ashburn.eu" target="_blank" rel="noopener noreferrer">Ashburn International JSC</a></h3>
+<ul class="points">
+<li>Engineered a card-linked loyalty platform integrated with bank payment-card systems for banking and retail clients.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Framework</li>
+<li>ASP.NET MVC &amp; Web Forms</li>
+<li>Windows Forms</li>
+<li>NServiceBus</li>
+<li>MSMQ</li>
+<li>SQL Server (SSRS, SSIS)</li>
+</ul>
+</div></article>
+<article class="role condensed" id="role-penki-kontinentai-jsc">
+<div class="role-meta">
+<p class="role-dates"><time datetime="2008-01">Jan 2008</time> – <time datetime="2010-09">Sep 2010</time></p>
+<p class="role-sub">2 yrs 9 mos · Vilnius, Lithuania</p>
+</div>
+<div class="role-body">
+<h3>Engineer&nbsp;<span class="sep">·</span> <a href="http://www.5ci.lt" target="_blank" rel="noopener noreferrer">Penki Kontinentai JSC</a></h3>
+<ul class="points">
+<li>Created a consumer-facing IPTV application alongside in-house accounting and reporting applications.</li>
+</ul>
+<ul class="tech" aria-label="Technologies">
+<li>.NET Framework</li>
+<li>ASP.NET Web Forms</li>
+<li>Windows Forms</li>
+<li>SQL Server (SSRS)</li>
+<li>JavaScript</li>
+<li>jQuery</li>
+</ul>
+</div></article>
+</div></section>
+<section class="section" id="skills">
+<h2>Skills</h2>
+<div class="groups">
+<div class="group"><h3>Architecture &amp; Design</h3><ul class="chips">
+<li>Software architecture</li>
+<li>Solution architecture</li>
+<li>System design</li>
+<li>Distributed systems</li>
+<li>Microservices</li>
+<li>Event-driven architecture</li>
+<li>Serverless architecture</li>
+<li>SOLID design principles</li>
+<li>Design patterns</li>
+<li>Clean Architecture</li>
+<li>REST API design</li>
+<li>High availability &amp; scalability</li>
+</ul></div>
+<div class="group"><h3>Languages &amp; Frameworks</h3><ul class="chips">
+<li>C#</li>
+<li>.NET / ASP.NET Core</li>
+<li>Entity Framework</li>
+<li>TypeScript</li>
+<li>JavaScript</li>
+<li>React</li>
+<li>Angular</li>
+<li>Node.js</li>
+<li>GraphQL</li>
+</ul></div>
+<div class="group"><h3>Cloud &amp; DevOps</h3><ul class="chips">
+<li>Azure (AKS, Functions, Front Door, Entra ID, Azure AI)</li>
+<li>AWS (Bedrock, Lambda, ECS, API Gateway, DynamoDB, S3, CloudFormation)</li>
+<li>Infrastructure as Code (Terraform)</li>
+<li>Docker</li>
+<li>Kubernetes</li>
+<li>Azure DevOps</li>
+<li>Continuous Integration &amp; Continuous Delivery (CI/CD)</li>
+<li>Git</li>
+<li>Octopus Deploy</li>
+<li>Observability (OpenTelemetry, Grafana, Prometheus, Application Insights)</li>
+<li>Cloud cost optimisation</li>
+<li>Cyber Essentials Plus</li>
+</ul></div>
+<div class="group"><h3>Integration Architecture &amp; Messaging</h3><ul class="chips">
+<li>Azure Service Bus</li>
+<li>RabbitMQ</li>
+<li>MassTransit</li>
+<li>NServiceBus</li>
+<li>AWS SQS/SNS</li>
+<li>REST APIs</li>
+<li>OAuth2/OpenID</li>
+</ul></div>
+<div class="group"><h3>Data &amp; Search</h3><ul class="chips">
+<li>SQL Server</li>
+<li>Cosmos DB</li>
+<li>DynamoDB</li>
+<li>MongoDB</li>
+<li>Oracle</li>
+<li>MySQL (Aurora)</li>
+<li>Elasticsearch (ELK)</li>
+<li>Redis</li>
+<li>Query &amp; performance optimisation</li>
+</ul></div>
+<div class="group"><h3>Engineering Practices &amp; Leadership</h3><ul class="chips">
+<li>TDD</li>
+<li>BDD</li>
+<li>xUnit</li>
+<li>NUnit</li>
+<li>MSTest</li>
+<li>Moq</li>
+<li>SpecFlow</li>
+<li>Agile (Scrum/Kanban)</li>
+<li>Pair programming</li>
+<li>Code reviews</li>
+<li>Mentoring engineers</li>
+<li>Knowledge sharing</li>
+<li>Architecture diagrams &amp; technical documentation</li>
+<li>AI-assisted development (Claude Code, LLM coding agents)</li>
+</ul></div>
+<div class="group"><h3>Legacy .NET &amp; Microsoft</h3><ul class="chips">
+<li>.NET Framework</li>
+<li>ASP.NET MVC &amp; Web Forms</li>
+<li>WCF</li>
+<li>Windows Forms</li>
+<li>SSIS/SSRS/SSAS</li>
+<li>NServiceBus/MSMQ</li>
+<li>AngularJS</li>
+<li>jQuery</li>
+<li>TFS</li>
+</ul></div>
+</div></section>
+<section class="section" id="certifications">
+<h2>Certifications</h2>
+<div class="groups">
+<div class="group"><p class="meta">Microsoft, 2011</p><ul class="plain">
+<li>MCPD Windows Developer 4</li>
+<li>MCTS .NET Framework 4</li>
+<li>MCTS .NET Framework 3.5 WCF Applications</li>
+<li>MCTS SQL Server 2008 Database Development</li>
+</ul></div>
+</div></section>
+<section class="section" id="education">
+<h2>Education</h2>
+<div class="groups">
+<div class="group"><p class="meta">Vilnius, Lithuania</p><ul class="plain"><li><strong>Bachelor of Computer Science (BSc)</strong></li><li class="muted"><a href="http://mif.vu.lt/lt3/en/" target="_blank" rel="noopener noreferrer">Vilnius University, Institute of Mathematics and Informatics</a></li></ul></div>
+</div></section>
+<footer class="foot">Full CV as PDF or Word, with contact details, on request via LinkedIn. Updated November 2026.</footer>
+</main>
+</div></div>
+<script>
+(function(){
+  var cap = document.getElementById('bar-caption');
+  if (cap) {
+    var rest = cap.textContent;
+    Array.prototype.forEach.call(document.querySelectorAll('.seg'), function(s){
+      function show(){ cap.textContent = s.getAttribute('data-label'); }
+      function hide(){ cap.textContent = rest; }
+      s.addEventListener('mouseenter', show); s.addEventListener('focus', show);
+      s.addEventListener('mouseleave', hide); s.addEventListener('blur', hide);
+    });
+  }
+  var links = document.querySelectorAll('.nav a');
+  if ('IntersectionObserver' in window && links.length) {
+    var byId = {};
+    Array.prototype.forEach.call(links, function(a){ byId[a.getAttribute('href').slice(1)] = a; });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        Array.prototype.forEach.call(links, function(a){ a.removeAttribute('aria-current'); });
+        if (byId[en.target.id]) byId[en.target.id].setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(byId).forEach(function(id){
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+})();
+</script>
